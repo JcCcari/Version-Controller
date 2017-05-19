@@ -1,0 +1,3 @@
+/home/jhoelccari/CLionProjects/VersionController/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/jhoelccari/CLionProjects/VersionController/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/jhoelccari/CLionProjects/VersionController/cmake-build-debug/CMakeFiles/VersionController.dir
