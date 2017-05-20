@@ -4,52 +4,26 @@
 #include "graph.cpp"
 using namespace std;
 
-
-struct traits;
-struct dataEdge;
-
-int main(int argc, char** argv) {
-    CFile file = CFile("test.txt");
-
-    /*
-    CGraph<CFile, string>* g = new CGraph<CFile, string>("test.txt");
-    g->insert(file);
-     */
-    //file.merge("foooooo");
-    CGraph<CFile, string>* g = new CGraph<CFile, string>("test.txt");
-    g->insert(file);
-    g->createBranch("branch1");
-    g->checkout("branch1");
-    g->insert(file);
-    return 0;
-
-}
-
-
-
-struct traits{
-    string node;        /// @Param el archivo
-    int edge;           /// @Param sera la diferencia de tiempos de creacion(t2 -t1)
-};
-
 struct dataEdge{
 
 };
 
-/*
-    g.insertNode("A");
-    g.insertNode("B");
-    g.insertNode("C");
-    g.insertNode("D");
-    g.insertEdge(1,"A","A");
+struct traits{
+    typedef traits Self;
+    typedef CNode<Self> GNode;
+    typedef CEdge<Self> GEdge;
+    typedef CNodeHash<GNode> HNode;
+    typedef CFile File;    /// Dato de los nodos
+    typedef string String;  /// Dato de las aristas //PD cambiar esto
+    //int edge;           /// @Param sera la diferencia de tiempos de creacion(t2 -t1)
+};
 
-    g.insertEdge(1,"A","B");
-    g.insertEdge(2,"B","C");
-    g.insertEdge(2,"B","D");
+int main(int argc, char** argv) {
+    typedef typename  traits::File File;
+    File file = File("test.txt");
 
-    g.insertEdge(3,"C","D");
-    g.insertEdge(3,"A","D");
+    CGraph<traits>* g = new CGraph<traits>("test.txt");
+    g->insert(file);
 
-    g.printNodes();
-    g.printEdges();
-    */
+    return 0;
+}

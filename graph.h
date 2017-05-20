@@ -18,33 +18,28 @@ class CNode;
 template <class G>
 class CEdge;
 
-template <class N, class E>
+template <class Tr>
 class CGraph
 {
 public:
-    typedef CGraph<N,E> self;
+    typedef typename Tr::Self self;
     typedef CNode<self> Node;
     typedef CEdge<self> Edge;
-    typedef N n;
-    typedef E e;
+    typedef typename Tr::File N;
+    typedef typename Tr::String E;
     CGraph(const string filename);
     ~CGraph();
 
     bool insert(N& x);
-    //bool insertNode(N);
     bool removeNode(N);
-    //bool insertEdge(E,N,N);
     bool removeEdge(E,N,N);
 
     bool createBranch(string nameBranch);
     bool checkout(string nameBranch);
 
-    E findEdge(N a, N b);
+    //E findEdge(N a, N b);
     void printNodes();
     void printEdges();
-    void printNodesAndEdges();
-
-    //bool findNode(Node*& p, N x);
 
     /* data */
     int currentId;

@@ -8,11 +8,11 @@
 #include "graph.h"
 using namespace std;
 
-template <class G>
+template <class Tr>
 class CBranch{
 public:
-    typedef typename G::self self;
-    typedef typename G::e e;
+    typedef typename Tr::Self self;
+    typedef typename Tr::String e;
     string name;
     CEdge<self>* ptr;
 

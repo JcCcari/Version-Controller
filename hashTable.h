@@ -27,6 +27,7 @@ public:
 template <class T>
 class ListAdaptor
 {
+    //typename typedef T::CNodeHash::CNode n;
 public:
     list<T> l;
     //typedef typename list<T> self;
@@ -43,7 +44,7 @@ public:
 
     bool insert(T x)
     {
-        if(find(x)) return 0;
+        //if(find(x)) return 0;
         l.push_back(x);
         return 1;
     }
@@ -57,6 +58,7 @@ public:
 
     void imprimir()
     {
+        //list<CNodeHash<self>>::iterator it = l.begin();
         list<string>::iterator it = l.begin();
         for(int i=0; i<l.size();i++, it++){
             cout<< *it << " ";
@@ -113,7 +115,7 @@ public:
     }
 
 
-    int setLenghtContainer(T num)
+    int operator()(T num)
     {
         int aux=0;
         vector<vector<int>> contenedor;
@@ -168,7 +170,7 @@ public:
 
     bool Insert(T x)
     {
-        int id=m_f(x)%m_size;
+        int id=m_f(x.id)%m_size;
         //cout<< x <<" -> "<<id<< " Insertion Successful "<<endl;
         return m_ht[id].insert(x);
     }
