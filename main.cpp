@@ -28,7 +28,8 @@ int main(int argc, char** argv) {
 
     CGraph<traits>* g = new CGraph<traits>("test.txt");
     g->insert(file);
-
+    CNodeHash<traits::GNode>* node= new CNodeHash<traits::GNode>();
+    cout << g->hashtable->find("textmaster1",*node)<< endl;
 
     return 0;
 }

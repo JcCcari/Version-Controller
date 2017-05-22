@@ -16,15 +16,21 @@ using namespace std;
 template <class T>
 class CNodeHash{
 public:
-    //typedef typename T::
     string id;
     T* node;
+
+    const string &getId() const {
+        return id;
+    }
+
+    CNodeHash(){}
     CNodeHash(string i,T* n){
         id = i;
-        n = node;
+        node = n;
     }
 };
-/*
+
+
 template <class Tr>
 class ListAdaptor
 {
@@ -32,13 +38,14 @@ class ListAdaptor
 public:
     vector<T> l;
     //typedef typename list<T> self;
-
-    bool find(T x)
+    //int aux = 0;
+    bool find(string x,T& node)
     {
-        typename vector<T>::iterator it = l.begin();
-        for(int i=0; i<l.size();i++, it++){
-            if( *it ==x)
+        for(int i=0; i< l.size(); i++){
+            if(l[i].id==x) {
+                node = l[i];
                 return 1;
+            }
         }
         return 0;
     }
@@ -52,8 +59,10 @@ public:
 
     bool remove(T x)
     {
-        if(!find(x))return 0;
-        //l.remove(x);
+        int pos;
+        if(!find(x,pos))return 0;
+        typename vector<T>::iterator it = l.begin();
+        l.erase(it+pos);
         return 1;
     }
 
@@ -68,8 +77,8 @@ public:
         return l.empty();
     }
 };
-*/
 
+/*
 template <class Tr>
 class ListAdaptor
 {
@@ -120,7 +129,7 @@ public:
         return *(it);
     }
 };
-
+*/
 template <class Tr>
 class DispersionFunction
 {
@@ -208,20 +217,20 @@ class CHashTable
     typedef typename Tr::DFunction F;
     typedef typename Tr::HNode T;
 public:
-    E *m_ht;
+    vector<E> m_ht;
     F m_f;
     int m_size;
 
     CHashTable(int size)
     {
         m_size=size;
-        m_ht=new E[m_size];
+        m_ht.resize(m_size);
     }
 
     bool Insert(T x)
     {
         int id=m_f(x.id)%m_size;
-        cout<< x.id <<" -> "<<id<< " Insertion Successful "<<endl;
+        cout<< x.getId() <<" -> "<<id<< " Insertion Successful "<<endl;
         return m_ht[id].insert(x);
     }
 
@@ -232,10 +241,11 @@ public:
         return m_ht[id].remove(x);
     }
 
-    bool find(T x)
+    bool find(string x, T& node)
     {
+        //int aux;
         int id=m_f(x)%m_size;
-        return m_ht[id].find(x);
+        return m_ht[id].find(x,node);
     }
 
     void imprimir()
@@ -249,7 +259,6 @@ public:
         }
         cout << endl;
     }
-
 
 };
 

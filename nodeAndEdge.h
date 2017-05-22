@@ -15,8 +15,9 @@ class CNode
 public:
     typedef typename Tr::GEdge Edge; // typedef typename G::Edge Edge; // tmbien es valido esto porque en la clase grafo, decimos que ambos son sus
     typedef typename Tr::File N;
-
+    CNode(){ }
     CNode(int i,string o,N* x){
+        owner = o;
         id = i;
         m_data = x;
     }
