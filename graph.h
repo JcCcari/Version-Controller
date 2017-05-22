@@ -22,11 +22,15 @@ template <class Tr>
 class CGraph
 {
 public:
-    typedef typename Tr::Self self;
-    typedef CNode<self> Node;
-    typedef CEdge<self> Edge;
+    //typedef typename Tr::Self traits;
+    typedef typename Tr::Self traits;
+    typedef CNode<traits> Node;
+    typedef CEdge<traits> Edge;
     typedef typename Tr::File N;
     typedef typename Tr::String E;
+    typedef typename Tr::HNode HNode;
+
+
     CGraph(const string filename);
     ~CGraph();
 
@@ -44,11 +48,12 @@ public:
     /* data */
     int currentId;
     vector<Node*> m_nodes;
-    CBranch<self>* currentBranch;
+    CBranch<traits>* currentBranch;
     vector<Edge*> allEdges;
-    vector<CBranch<self>> branches;
+    vector<CBranch<traits>> branches;
 
-    CHashTable<CNodeHash<CNode<self>>,DispersionFunction<string>,ListAdaptor<CNodeHash<CNode<self>>>>* hashtable;
+    //CHashTable<CNodeHash<CNode<traits>>,DispersionFunction<string>,ListAdaptor<CNodeHash<CNode<traits>>>>* hashtable;
+    CHashTable<traits>* hashtable;
 
 };
 

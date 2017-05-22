@@ -11,6 +11,11 @@ using namespace std;
 struct CFile{
     fstream file;
     string namefile;
+
+    const string &getNamefile() const {
+        return namefile;
+    }
+
     CFile(const string name){
         namefile = name;
         createFile(name);
@@ -24,7 +29,7 @@ struct CFile{
 
     void merge(string text){
         file.open(namefile,std::fstream::in | std::fstream::out | std::fstream::app);
-        file<< text<<endl;
+        file<< text <<endl;
         file.close();
     }
 

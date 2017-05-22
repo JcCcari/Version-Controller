@@ -16,6 +16,7 @@ using namespace std;
 template <class T>
 class CNodeHash{
 public:
+    //typedef typename T::
     string id;
     T* node;
     CNodeHash(string i,T* n){
@@ -23,11 +24,56 @@ public:
         n = node;
     }
 };
-
-template <class T>
+/*
+template <class Tr>
 class ListAdaptor
 {
-    //typename typedef T::CNodeHash::CNode n;
+    typedef typename Tr::HNode T;
+public:
+    vector<T> l;
+    //typedef typename list<T> self;
+
+    bool find(T x)
+    {
+        typename vector<T>::iterator it = l.begin();
+        for(int i=0; i<l.size();i++, it++){
+            if( *it ==x)
+                return 1;
+        }
+        return 0;
+    }
+
+    bool insert(T x)
+    {
+        //if(find(x)) return 0;
+        l.push_back(x);
+        return 1;
+    }
+
+    bool remove(T x)
+    {
+        if(!find(x))return 0;
+        //l.remove(x);
+        return 1;
+    }
+
+    void imprimir()
+    {
+        typename vector<T>::iterator it = l.begin();
+        for(int i=0; i<l.size();i++, it++){
+            cout<< *it << " ";
+        }
+    }
+    bool empty(){
+        return l.empty();
+    }
+};
+*/
+
+template <class Tr>
+class ListAdaptor
+{
+    typedef typename Tr::HNode T;
 public:
     list<T> l;
     //typedef typename list<T> self;
@@ -58,8 +104,7 @@ public:
 
     void imprimir()
     {
-        //list<CNodeHash<self>>::iterator it = l.begin();
-        list<string>::iterator it = l.begin();
+        typename list<T>::iterator it = l.begin();
         for(int i=0; i<l.size();i++, it++){
             cout<< *it << " ";
         }
@@ -69,16 +114,17 @@ public:
     }
 
     T operator[](int n){
-        list<string>::iterator it = l.begin();
+        typename list<T>::iterator it = l.begin();
         for(int i=0; i<n; i++)
             it++;
         return *(it);
     }
 };
 
-template <class T>
+template <class Tr>
 class DispersionFunction
 {
+    typedef typename Tr::String T;
 public:
 ///metodo de compresion, ascii
     vector<int> binario(int num)
@@ -154,9 +200,13 @@ public:
 
 };
 
-template<class T,class F, class E>
+//template<class T,class F, class E>
+template <class Tr>
 class CHashTable
 {
+    typedef typename Tr::LAdaptor E;
+    typedef typename Tr::DFunction F;
+    typedef typename Tr::HNode T;
 public:
     E *m_ht;
     F m_f;
@@ -171,7 +221,7 @@ public:
     bool Insert(T x)
     {
         int id=m_f(x.id)%m_size;
-        //cout<< x <<" -> "<<id<< " Insertion Successful "<<endl;
+        cout<< x.id <<" -> "<<id<< " Insertion Successful "<<endl;
         return m_ht[id].insert(x);
     }
 

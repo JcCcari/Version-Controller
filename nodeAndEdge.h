@@ -22,6 +22,18 @@ public:
     }
     ~CNode(){};
 
+    int getId() const {
+        return id;
+    }
+
+    const string &getOwner() const {
+        return owner;
+    }
+
+    N *getM_data() const {
+        return m_data;
+    }
+
     int id;
     string owner;
     N* m_data;

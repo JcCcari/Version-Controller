@@ -14,17 +14,18 @@ CGraph<Tr>::CGraph(const string filename){
     CFile* file = new CFile(filename);
     Node* tmp = new Node(currentId,"master",file);
     m_nodes.push_back(tmp);
-    CEdge<self>* edge = new CEdge<self>("centinela", nullptr,tmp);
+    CEdge<traits>* edge = new CEdge<traits>("centinela", nullptr,tmp);
     tmp->m_edges.push_back(edge);
-    CBranch<self>* branch = new CBranch<self>("master", edge);
+    CBranch<traits>* branch = new CBranch<traits>("master", edge);
     allEdges.push_back(edge);
 
-    CBranch<self>* master = new CBranch<self>("master", edge );
+    CBranch<traits>* master = new CBranch<traits>("master", edge );
     branches.push_back(*master);
     currentBranch = master;
 
     /// Creamos la tabla hash
-    hashtable = new CHashTable< CNodeHash<CNode<self>> , DispersionFunction<string> , ListAdaptor<CNodeHash<CNode<self>>> >(15);
+    //hashtable = new CHashTable< CNodeHash<CNode<traits>> , DispersionFunction<string> , ListAdaptor<CNodeHash<CNode<traits>>> >(15);
+    hashtable = new CHashTable<traits>(15);
 }
 
 template <class Tr>
@@ -34,25 +35,25 @@ template <class Tr>
 bool CGraph<Tr>::insert(N& x){
     currentId +=1;
     /// creamos Node
-    CNode<self>* tmp = new CNode<self>(currentId,currentBranch->name,&x);
+    CNode<traits>* tmp = new CNode<traits>(currentId,currentBranch->name,&x);
     m_nodes.push_back(tmp);
 
     /// creamos Edge
-    CEdge<self>* edge = new CEdge<self>("cambiarEsto",currentBranch->ptr->m_node[1],tmp);
+    CEdge<traits>* edge = new CEdge<traits>("cambiarEsto",currentBranch->ptr->m_node[1],tmp);
     /// actualizamos "currentBranch"
     currentBranch->updateEdge(edge);
     /// guardamos la arista creada
     tmp->m_edges.push_back(edge);
     allEdges.push_back(edge);
 
-    CBranch<self>* branch = new CBranch<self>("cambiarEstotambien",edge);
+    CBranch<traits>* branch = new CBranch<traits>("cambiarEstotambien",edge);
 
     /// almacenamos en la hash
-    /*
+
     string id = "text"+currentBranch->name+to_string(currentId);
-    CNodeHash<CNode<self>>* nodeHash = new CNodeHash<CNode<self>>(id,tmp);
+    CNodeHash<Node>* nodeHash = new CNodeHash<Node>(id,tmp);
     hashtable->Insert(*nodeHash);
-    */
+
 };
 
 
@@ -112,7 +113,7 @@ bool CGraph<Tr>::removeEdge(E x, N a, N b)
 template <class Tr>
 bool CGraph<Tr>::createBranch(string nameBranch){ /// crea un branch y lo almacena en "branches"
     /// El nuevo branch apunta a Edge de "currentBranch"
-    CBranch<self>* branch = new CBranch<self>(nameBranch,currentBranch->ptr);
+    CBranch<traits>* branch = new CBranch<traits>(nameBranch,currentBranch->ptr);
     branches.push_back(* branch);
     return 1;
 };
