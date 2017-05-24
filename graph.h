@@ -31,21 +31,19 @@ public:
     typedef typename Tr::HNode HNode;
 
 
-    CGraph(const string filename);
+    CGraph(const string filename, string _user);
     ~CGraph();
 
     bool insert(N& x);
-    bool removeNode(N);
-    bool removeEdge(E,N,N);
+    bool find(string finded, HNode* node= nullptr);
 
     bool createBranch(string nameBranch);
     bool checkout(string nameBranch);
+    bool changeUser(string another);
 
-    //E findEdge(N a, N b);
-    void printNodes();
-    void printEdges();
 
     /* data */
+    string user;
     int currentId;
     vector<Node*> m_nodes;
     CBranch<traits>* currentBranch;

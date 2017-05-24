@@ -24,12 +24,12 @@ struct traits{
 
 int main(int argc, char** argv) {
     typedef typename traits::File File;
+    string user = "jhoel";
     File file = File("test.txt");
-
-    CGraph<traits>* g = new CGraph<traits>("test.txt");
+    CGraph<traits>* g = new CGraph<traits>("test.txt", user);
     g->insert(file);
-    CNodeHash<traits::GNode>* node= new CNodeHash<traits::GNode>();
-    cout << g->hashtable->find("textmaster1",*node)<< endl;
+
+    g->find("testmaster1");
 
     return 0;
 }
