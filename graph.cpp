@@ -15,6 +15,8 @@ CGraph<Tr>::CGraph(const string filename, string _user){
     CFile* file = new CFile(filename);
     Node* tmp = new Node(currentId,"master",file);
     m_nodes.push_back(tmp);
+
+    //root = tmp;     ///guardamos la direccion del nodo centinela como root
     CEdge<traits>* edge = new CEdge<traits>("centinela", nullptr,tmp);
     tmp->m_edges.push_back(edge);
     CBranch<traits>* branch = new CBranch<traits>("master", edge);
@@ -54,7 +56,6 @@ bool CGraph<Tr>::insert(N& x){
     string id = "text"+currentBranch->name+to_string(currentId);
     CNodeHash<Node>* nodeHash = new CNodeHash<Node>(id,tmp);
     hashtable->Insert(*nodeHash);
-
 };
 
 /* Ejemplo de una busqueda

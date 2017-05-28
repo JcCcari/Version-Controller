@@ -41,7 +41,6 @@ public:
     bool checkout(string nameBranch);
     bool changeUser(string another);
 
-
     /* data */
     string user;
     int currentId;
@@ -49,9 +48,10 @@ public:
     CBranch<traits>* currentBranch;
     vector<Edge*> allEdges;
     vector<CBranch<traits>> branches;
-
+    //Node* root; ///Tenemos que tener un root para guardar los estados del grafo en un tiempo n
     //CHashTable<CNodeHash<CNode<traits>>,DispersionFunction<string>,ListAdaptor<CNodeHash<CNode<traits>>>>* hashtable;
     CHashTable<traits>* hashtable;
+
 
 };
 

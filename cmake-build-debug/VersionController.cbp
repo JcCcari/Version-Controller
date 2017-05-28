@@ -87,6 +87,9 @@
 		<Unit filename="/home/jhoelccari/CLionProjects/VersionController/CFile.h">
 			<Option target="VersionController"/>
 		</Unit>
+		<Unit filename="/home/jhoelccari/CLionProjects/VersionController/CPersistence.h">
+			<Option target="VersionController"/>
+		</Unit>
 		<Unit filename="/home/jhoelccari/CLionProjects/VersionController/graph.cpp">
 			<Option target="VersionController"/>
 		</Unit>
