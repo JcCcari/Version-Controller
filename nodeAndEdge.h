@@ -23,6 +23,10 @@ public:
     }
     ~CNode(){};
 
+    void destroyNode(){
+        this->~CNode();
+    }
+
     int getId() const {
         return id;
     }
@@ -33,6 +37,19 @@ public:
 
     N *getM_data() const {
         return m_data;
+    }
+
+    int findPositionEdge(Edge* e){
+        for(int i=0; i< m_edges.size(); i++){
+            if(e == m_edges[i])
+                return i;
+        }
+    }
+
+    void removeEdge(Edge* e){
+        int pos = findPositionEdge(e);
+        typename vector<Edge*>::iterator it = m_edges.begin();
+        m_edges.erase(it+pos);
     }
 
     int id;

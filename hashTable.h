@@ -13,20 +13,41 @@
 
 using namespace std;
 
-template <class T>
+template <class Tr>
 class CNodeHash{
 public:
+    typedef typename Tr::GNode N;
+    typedef typename Tr::GEdge E;
     string id;
-    T* node;
+    N* node;
 
-    const string &getId() const {
-        return id;
-    }
 
     CNodeHash(){}
-    CNodeHash(string i,T* n){
+    CNodeHash(string i,N* n, E* e){
         id = i;
         node = n;
+        edge = e;
+    }
+
+    N *getNode() const {
+        return node;
+    }
+
+    void setNode(N *node) {
+        CNodeHash::node = node;
+    }
+
+    E *getEdge() const {
+        return edge;
+    }
+
+    void setEdge(E *edge) {
+        CNodeHash::edge = edge;
+    }
+
+    E* edge;
+    const string &getId() const {
+        return id;
     }
 };
 
@@ -243,8 +264,9 @@ public:
 
     bool find(string x, T& node)
     {
-        //int aux;
+
         int id=m_f(x)%m_size;
+        cout <<"En hash " <<id << endl;
         return m_ht[id].find(x,node);
     }
 

@@ -54,7 +54,7 @@ bool CGraph<Tr>::insert(N& x){
     /// almacenamos en la hash
 
     string id = "text"+currentBranch->name+to_string(currentId);
-    CNodeHash<Node>* nodeHash = new CNodeHash<Node>(id,tmp);
+    CNodeHash<traits>* nodeHash = new CNodeHash<traits>(id,tmp,edge);
     hashtable->Insert(*nodeHash);
 };
 
@@ -65,15 +65,22 @@ bool CGraph<Tr>::insert(N& x){
  * */
 template <class Tr>
 bool CGraph<Tr>::find(string finded, HNode* node){
-    hashtable->find(finded,*node);
-    return node != nullptr;
+    cout << "Buscando ... " << finded << endl;
+    bool aux = hashtable->find(finded,*node);
+    return aux;
 }
 
 template <class Tr>
 bool CGraph<Tr>::remove(string target) {
-    if ( not find(target))
-        return false;
+    HNode* node = new HNode();
+    if ( not find(target,node))
+        return false; ///El nodo no se encontro
     ///borramos
+    CEdge<traits>* edge = node->getEdge();
+    CNode<traits>* prev = edge->m_node[0]; /// en este nodo debemos borrar el "edge" que apuntaba a "target"
+    CNode<traits>* next = edge->m_node[1]; /// este es el nodo a eliminar
+    prev->removeEdge(edge);
+    next->destroyNode();
     return true;
 }
 

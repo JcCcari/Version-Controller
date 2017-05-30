@@ -15,7 +15,7 @@ struct traits{
     //int edge;           /// @Param sera la diferencia de tiempos de creacion(t2 -t1)
 
     ///Para la tabla Hash
-    typedef CNodeHash<GNode> HNode;
+    typedef CNodeHash<Self> HNode;
     typedef DispersionFunction<Self> DFunction;
     typedef ListAdaptor<Self> LAdaptor;
 };
@@ -28,6 +28,8 @@ int main(int argc, char** argv) {
     g->insert(file);
     g->insert(file);
     g->createBranch("branch1");
+
+    /*
     g->insert(file);
     g->insert(file);
     g->insert(file);
@@ -37,11 +39,16 @@ int main(int argc, char** argv) {
     g->insert(file);
     g->checkout("branch2");
     g->insert(file);
-    traits::HNode* nod;
-    g->find("testmaster1",nod);
-    traits::GNode* n = nod->node;
-    g->findPath(n,g->root);
-
+     */
+    //g->findPath(n,g->root);
+    g->remove("textmaster2");
 
     return 0;
 }
+
+/*
+ * traits::HNode* nod = new traits::HNode();
+    cout << g->find("textmaster1",nod) << endl;
+    traits::GNode* n = nod->node;
+    CNode<traits>* nn = nod->node;
+*/
