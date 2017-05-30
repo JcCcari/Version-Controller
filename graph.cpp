@@ -1,7 +1,7 @@
 //
 // Created by jhoelccari on 05/05/17.
 //
-
+#include <queue>
 #include "graph.h"
 #include "CFile.h"
 #include <iostream>
@@ -16,7 +16,7 @@ CGraph<Tr>::CGraph(const string filename, string _user){
     Node* tmp = new Node(currentId,"master",file);
     m_nodes.push_back(tmp);
 
-    //root = tmp;     ///guardamos la direccion del nodo centinela como root
+    root = tmp;     ///guardamos la direccion del nodo centinela como root
     CEdge<traits>* edge = new CEdge<traits>("centinela", nullptr,tmp);
     tmp->m_edges.push_back(edge);
     CBranch<traits>* branch = new CBranch<traits>("master", edge);
@@ -58,6 +58,7 @@ bool CGraph<Tr>::insert(N& x){
     hashtable->Insert(*nodeHash);
 };
 
+
 /* Ejemplo de una busqueda
  * CNodeHash<traits::GNode>* node= new CNodeHash<traits::GNode>();
  * cout << g->find("textmaster1",*node)<< endl;
@@ -67,6 +68,15 @@ bool CGraph<Tr>::find(string finded, HNode* node){
     hashtable->find(finded,*node);
     return node != nullptr;
 }
+
+template <class Tr>
+bool CGraph<Tr>::remove(string target) {
+    if ( not find(target))
+        return false;
+    ///borramos
+    return true;
+}
+
 
 template <class Tr>
 bool CGraph<Tr>::createBranch(string nameBranch){ /// crea un branch y lo almacena en "branches"
@@ -88,7 +98,56 @@ bool CGraph<Tr>::checkout(string nameBranch) { /// cambia el valor de "currentBr
     return false;
 }
 
+
 template <class Tr>
 bool CGraph<Tr>::changeUser(string another){
     this->user = another;
+    return true;
+}
+
+template <class Tr>
+bool CGraph<Tr>::findPath(Node *target, Node* start) {
+    path.push_back(start);
+    while( path[path.size()-1]->m_edges.size() == 1 ){
+        Node* tmp = path[path.size()-1]->m_edges[0]->m_node[1];
+        path.push_back(tmp);
+        if (tmp == target)
+            return true;
+    }
+    //visitNode();
+    return false;
+}
+
+/*
+template <class Tr>
+bool CGraph<Tr>::findPath(Node *target) {
+    queue<Node*> container;
+    container.push(root);
+    Node* tmp;
+    while( not container.empty() ){
+        tmp = container.front();
+        container.pop();
+        if(target==tmp)
+            break;
+        for(int i=0; i< tmp->m_edges.size(); i++){
+            container.push(tmp->m_edges[i].m_nodes[1]);
+        }
+    }
+    return false;
+}
+*/
+
+template<class Tr>
+bool CGraph<Tr>::visitNode(Node *target,Node* start) {
+    queue<Node*> tmp;
+    tmp.push(start);
+    Node* aux = tmp.front();
+    if ( aux->m_edges.size() > 1){
+
+    } else {
+        if (aux->m_edges.size() == 1){
+
+        }
+    }
+    return false;
 }

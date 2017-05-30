@@ -26,8 +26,22 @@ int main(int argc, char** argv) {
     File file = File("test.txt");
     CGraph<traits>* g = new CGraph<traits>("test.txt", user);
     g->insert(file);
+    g->insert(file);
+    g->createBranch("branch1");
+    g->insert(file);
+    g->insert(file);
+    g->insert(file);
+    g->checkout("branch1");
+    g->insert(file);
+    g->createBranch("branch2");
+    g->insert(file);
+    g->checkout("branch2");
+    g->insert(file);
+    traits::HNode* nod;
+    g->find("testmaster1",nod);
+    traits::GNode* n = nod->node;
+    g->findPath(n,g->root);
 
-    g->find("testmaster1");
 
     return 0;
 }
