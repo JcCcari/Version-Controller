@@ -1,5 +1,7 @@
 #include <iostream>
 #include "graph.cpp"
+#include "CPersistence.h"
+
 using namespace std;
 
 struct dataEdge{
@@ -18,6 +20,8 @@ struct traits{
     typedef CNodeHash<Self> HNode;
     typedef DispersionFunction<Self> DFunction;
     typedef ListAdaptor<Self> LAdaptor;
+    typedef CBranch<Self> Branch;
+    typedef CPersistence<Self> Persistence;
 };
 
 int main(int argc, char** argv) {
@@ -27,7 +31,29 @@ int main(int argc, char** argv) {
     CGraph<traits>* g = new CGraph<traits>("test.txt", user);
     g->insert(file);
     g->insert(file);
+    g->insert(file);
+
     g->createBranch("branch1");
+    g->checkout("branch1");
+    g->insert(file);
+    g->insert(file);
+
+    g->checkout("master");
+    g->insert(file);
+    g->printGraph();
+    //g->findPath("textbranch14");
+    /*
+    g->createBranch("branch2");
+    g->checkout("branch2");
+    g->insert(file);
+
+    //
+
+    g->checkout("master");
+    g->insert(file);
+    g->insert(file);
+
+
 
     /*
     g->insert(file);
@@ -41,12 +67,12 @@ int main(int argc, char** argv) {
     g->insert(file);
      */
     //g->findPath(n,g->root);
-    g->remove("textmaster2");
+    //g->remove("textmaster3");
 
     return 0;
 }
 
-/*
+/* example of use method find
  * traits::HNode* nod = new traits::HNode();
     cout << g->find("textmaster1",nod) << endl;
     traits::GNode* n = nod->node;

@@ -154,7 +154,8 @@ public:
 template <class Tr>
 class DispersionFunction
 {
-    typedef typename Tr::String T;
+    //typedef typename Tr::String T;
+    typedef string T;
 public:
 ///metodo de compresion, ascii
     vector<int> binario(int num)
@@ -251,13 +252,13 @@ public:
     bool Insert(T x)
     {
         int id=m_f(x.id)%m_size;
-        cout<< x.getId() <<" -> "<<id<< " Insertion Successful "<<endl;
+        //cout<< x.getId() <<" -> "<<id<< " Insertion Successful "<<endl;
         return m_ht[id].insert(x);
     }
 
     bool remove(T x)
     {
-        int id=m_f(x)%m_size;
+        int id=m_f(x.id)%m_size;
         //cout<< x <<" -> "<<id<< " Delete Successful "<<endl;
         return m_ht[id].remove(x);
     }
@@ -266,7 +267,7 @@ public:
     {
 
         int id=m_f(x)%m_size;
-        cout <<"En hash " <<id << endl;
+        //cout <<"En hash " <<id << endl;
         return m_ht[id].find(x,node);
     }
 

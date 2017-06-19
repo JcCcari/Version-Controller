@@ -33,6 +33,15 @@ struct CFile{
         file.close();
     }
 
+    string getData(){
+        file.open(namefile,std::fstream::in | std::fstream::out | std::fstream::app);
+        string body, line;
+        while( getline(file,line)){
+            body += line +"\n";
+        }
+        file.close();
+        return body;
+    }
 
 };
 #endif //VERSIONCONTROLLER_CFILE_H

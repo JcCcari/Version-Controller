@@ -14,20 +14,38 @@ public:
     typedef typename Tr::Self self;
     typedef typename Tr::String e;
     string name;
-    CEdge<self>* ptr;
+
+    CEdge<self>* edge;
+
+    const string &getName() const {
+        return name;
+    }
+
+    void setName(const string &name) {
+        CBranch::name = name;
+    }
+
+    void setEdge(CEdge<self> *edge) {
+        CBranch::edge = edge;
+    }
+
+    CEdge<self> *getEdge() const {
+        return edge;
+    }
 
     CBranch(){
         name = "master";
-        ptr = nullptr;
+        edge = nullptr;
     }
 
     CBranch(string n,CEdge<self>* p=nullptr){
         name = n;
-        ptr = p;
+        edge = p;
     }
 
     bool updateEdge(CEdge<self>* e){
-        ptr = e;
+        //cout << "Update: " << edge->m_node[0] << " to " << e->m_node[0] << endl;
+        edge = e;
     }
 };
 #endif //VERSIONCONTROLLER_TOOLS_H

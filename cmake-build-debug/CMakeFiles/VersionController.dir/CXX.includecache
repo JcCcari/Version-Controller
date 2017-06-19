@@ -12,6 +12,10 @@ iostream
 fstream
 -
 
+/home/jhoelccari/CLionProjects/VersionController/CPersistence.h
+vector
+-
+
 /home/jhoelccari/CLionProjects/VersionController/graph.cpp
 queue
 -
@@ -19,6 +23,8 @@ graph.h
 /home/jhoelccari/CLionProjects/VersionController/graph.h
 CFile.h
 /home/jhoelccari/CLionProjects/VersionController/CFile.h
+algorithm
+-
 iostream
 -
 
@@ -49,6 +55,8 @@ iostream
 -
 graph.cpp
 /home/jhoelccari/CLionProjects/VersionController/graph.cpp
+CPersistence.h
+/home/jhoelccari/CLionProjects/VersionController/CPersistence.h
 
 /home/jhoelccari/CLionProjects/VersionController/nodeAndEdge.h
 iostream
