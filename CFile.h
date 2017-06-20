@@ -23,7 +23,7 @@ struct CFile{
 
     void createFile(const string namefile){
         file.open(namefile,std::fstream::in | std::fstream::out | std::fstream::app);
-        file<<"hello world!" << endl;
+        file<<"#File Creado" << endl;
         file.close();
     }
 

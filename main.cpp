@@ -31,6 +31,9 @@ int main(int argc, char** argv) {
     CGraph<traits>* g = new CGraph<traits>("test.txt", user);
     g->insert(file);
     g->insert(file);
+    g->printPersistence();
+    /*
+    g->insert(file);
     g->insert(file);
 
     g->createBranch("branch1");

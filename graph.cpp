@@ -5,6 +5,7 @@
 #include "graph.h"
 #include "CFile.h"
 #include <algorithm>
+#include <fstream>
 #include <iostream>
 using namespace std;
 
@@ -34,7 +35,8 @@ CGraph<Tr>::CGraph(const string filename, string _user){
     //hashtable = new CHashTable< CNodeHash<CNode<traits>> , DispersionFunction<string> , ListAdaptor<CNodeHash<CNode<traits>>> >(15);
     hashtable = new CHashTable<traits>(15);
 
-    states.insertNewState(getM_nodes());
+    ///> Creamos el primer estado de la Persistencia
+    states.insertNewState(getNodes());
 }
 
 template <class Tr>
@@ -42,12 +44,10 @@ CGraph<Tr>::~CGraph(){}
 
 template <class Tr>
 bool CGraph<Tr>::insert(N& x){
-    string objetivo =currentBranch->getEdge()->getSecondNode()->getLabel();
-    buildPersistence(objetivo);
-
     currentId +=1;
     /// creamos Node
     CNode<traits>* tmp = new CNode<traits>(currentId,currentBranch->name,&x);
+    //states.getCurrentVersion().push_back(tmp);
     m_nodes.push_back(tmp);
 
     /// creamos Edge
@@ -69,6 +69,10 @@ bool CGraph<Tr>::insert(N& x){
     hashtable->Insert(*nodeHash);
     //cout << "Insertando: " << id << endl;
     tmp->setLabel(id);      /// le damos una etiqueta al nodo creado
+
+    /// construimos la persistencia
+    string objetivo =currentBranch->getEdge()->getSecondNode()->getLabel();
+    buildPersistence(objetivo);
 };
 
 
@@ -98,12 +102,39 @@ bool CGraph<Tr>::remove(string target) {
     return true;
 }
 
-/*
-    Branch* tmp = new CBranch<traits>();
-    if (checkCurrentBranch(edge,tmp)){
-        //tmp->updateEdge();
-    }
-*/
+template <class Tr>
+bool CGraph<Tr>::merge(string nodeLabel1, string nodeLabel2) {
+    ///> Buscamos los nodos con las etiquetas nodeLabel1, y nodeLabel2
+    HNode* hnode1, hnode2;
+    Node* node1; Node* node2;// Node* merge;
+    if ( not find(nodeLabel1,hnode1) ) return false; /// Si alguno de los 2 no es un nodo, terminamos la funcion
+    if ( not find(nodeLabel2,hnode2) ) return false; /// Si alguno de los 2 no es un nodo, terminamos la funcion
+    node1 = hnode1->getNode();
+    node2 = hnode2->getNode();
+
+    ///> Recuperamos el texto que se encuenta en node1 y node2
+    string n1 = node1->getFile()->getData();
+    string n2 = node2->getFile()->getData();
+    string namefile = node1->getFile()->getNameFile();
+
+    /// Creamos un nuevo archivo
+    CFile *m = new CFile(namefile);
+    Node* merge = new Node(currentId,currentBranch->getName(), m);
+    /// Hacemos un merge con los datos de ambos nodos
+    merge->getFile()->merge(n1);
+    merge->getFile()->merge(n2);
+
+    ///> Linkeamos el nuevo nodo creado con sus dos padres
+    Edge* edge1 = new Edge("dato de arista",node1, merge);
+    Edge* edge2 = new Edge("dato de arista",node2, merge);
+    node1->saveEdge(edge1);
+    node2->saveEdge(edge2);
+
+    ///guardamos el nodo merge
+    m_nodes.push_back(merge);
+    return true;
+}
+
 
 template <class Tr> /// No recuerdo para que hize esta funcion
 bool CGraph<Tr>::checkCurrentBranch(CGraph::Edge *b,Branch* tmp) {
@@ -209,8 +240,9 @@ bool CGraph<Tr>::findPath(Node *target) {
 
 template<class Tr>
 bool CGraph<Tr>::buildPersistence(string target) {
+    states.insertNewState(getNodes());
     path = findPath(target);
-
+    m_nodes = path;
 
     return false;
 }
@@ -225,5 +257,29 @@ void CGraph<Tr>::printGraph() {
         }
     }
     cout << "}" << endl;
+    //system("dot -Tpng graph.dot -o graph.png");
 }
+
+template<class Tr>
+void CGraph<Tr>::printPersistence() {
+    fstream graph;
+    graph.open("graph.dot",fstream::out | fstream::binary);
+    if (not graph.is_open()) return; ///no se pudo abrir el archivo, por alguna razon
+    graph << "# Printing printPersistence" << endl;
+    graph << "digraph G{ " << endl;
+    graph <<     "node [shape=circle];"<< endl;
+    for (int k =0; k< states.getStatesNumber(); k++) {
+        if (k ==0)
+            graph << states.getVersion(k)[0]->getLabel() << "0 -> centinela"<<";"<< endl ;
+        for (int i = 0; i < states.getVersion(k).size()-1; i++){
+                graph << states.getVersion(k)[i]->getLabel() <<k<<" -> " << states.getVersion(k)[i+1]->getLabel() <<k<< ";"<< endl;
+        }
+    }
+    graph << "}" << endl;
+    graph.close();
+
+    system("dot -Tpng graph2.dot -o graph2.png");
+}
+
+
 

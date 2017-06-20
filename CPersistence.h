@@ -35,10 +35,20 @@ public:
         return true;
     };
 
+    vector<Node*> getVersion(int index){
+        if (index >= 0 or index <= current)
+            return version[index];
+        return getCurrentVersion();
+    }
+
     void changeVersion(int newVersion){
         if (newVersion >= 0 or newVersion <= current)
             current = newVersion;
         ///deberia retornar version[newVersion-1] ??
+    }
+
+    int getStatesNumber(){
+        return version.size();
     }
 
 };

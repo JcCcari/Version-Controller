@@ -82,6 +82,7 @@ public:
     void setCurrentRoot(Node * newRoot){ currentRoot = newRoot; }
 
     void printGraph();
+    void printPersistence();
 
     bool findNodeInPath(Node* n){
         for(int i=0; i<path.size(); i++){
@@ -93,16 +94,8 @@ public:
 
     /// esta funcion buscara un camino desde la raiz a nodo "target"
     /// por lo que guardara los nodos en medio en el "vector<Node*> path"
-    //bool findPath(Node* target, Node* start);
     vector<Node*> findPath(string targ){
-        /*
-        if (targ =="root" ){
-            vector<Node*> empty;
-            empty.push_back(getCurrentRoot());
-            return empty;
-        }
-         */
-        //Node* start = root;
+
         ///buscamos el nodo
         HNode* tmp = new HNode();
         find(targ,tmp);
@@ -111,12 +104,7 @@ public:
         Node* aux = _target;
         while( aux != getCurrentRoot() and aux != nullptr){
             pathAux.push_back(aux);
-            aux = aux->pointingEdge->getFirstNode();
-            /*
-            Node* tmp2 = aux->pointingEdge->getFirstNode();
-            if (tmp2 != nullptr)
-                aux = tmp2 ; // guardamos el anterior
-             */
+            aux = aux->getPointingEdge()->getFirstNode();
         }
         //if (not findNodeInPath( getCurrentRoot() ) ) {
             ///cout << "Agregando root" << endl;
@@ -126,10 +114,9 @@ public:
         for(int i=0; i<pathAux.size(); i++)
             pathFinal.push_back(pathAux[pathAux.size()-i-1]);
         return pathFinal;
-        //return this->path[path.size()-1]==getCurrentRoot()? true:false;
     }
 
-    const vector<Node *> &getM_nodes() const {
+    const vector<Node *> &getNodes() const {
         return m_nodes;
     }
 

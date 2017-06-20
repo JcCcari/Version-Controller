@@ -15,12 +15,24 @@ class CNode
 public:
     typedef typename Tr::GEdge Edge; // typedef typename G::Edge Edge; // tmbien es valido esto porque en la clase grafo, decimos que ambos son sus
     typedef typename Tr::File N;
+
+    int id;
+    string owner;
+    string label;
+    N* file;
+
+    vector<Edge*> m_edges;
+
+    Edge* pointingEdge[2];     /// puntero al edge que apunta al nodo
+
+
     CNode(){ }
-    CNode(int i,string o,N* x, Edge* pe = nullptr){
+    CNode(int i,string o,N* x, Edge* pe1 = nullptr,Edge* pe2 = nullptr){
         owner = o;
         id = i;
-        m_data = x;
-        pointingEdge = pe;
+        file = x;
+        pointingEdge[0] = pe1;
+        pointingEdge[1] = pe2;
     }
     ~CNode(){};
 
@@ -36,8 +48,8 @@ public:
         return owner;
     }
 
-    N *getM_data() const {
-        return m_data;
+    N *getFile() const {
+        return file;
     }
 
     int findPositionEdge(Edge* e){
@@ -53,28 +65,34 @@ public:
         m_edges.erase(it+pos);
     }
 
+    void saveEdge(Edge* e){
+        m_edges.push_back(e);
+    }
+
     Edge *getPointingEdge() const {
-        return pointingEdge;
+        return pointingEdge[0];
     }
 
     void setPointingEdge(Edge *pe) {
-        pointingEdge = pe;
+        pointingEdge[0] = pe;
     }
+
+    Edge *getPointingEdge2() const {
+        return pointingEdge[1];
+    }
+
+    void setPointingEdge2(Edge *pe) {
+        pointingEdge[1] = pe;
+    }
+
     const string getLabel() const {
         return label;
     }
 
-    void setLabel(const string &label) {
-        CNode::label = label;
+    void setLabel(const string &l) {
+        label = l;
     }
 
-    int id;
-    string owner;
-    string label;
-    N* m_data;
-    vector<Edge*> m_edges;
-
-    Edge* pointingEdge;     /// puntero al edge que apunta al nodo
 };
 
 template <class Tr>

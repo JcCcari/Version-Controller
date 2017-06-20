@@ -9,6 +9,7 @@ CMakeFiles/VersionController.dir/graph.cpp.o: ../nodeAndEdge.h
 CMakeFiles/VersionController.dir/graph.cpp.o: ../tools.h
 
 CMakeFiles/VersionController.dir/main.cpp.o: ../CFile.h
+CMakeFiles/VersionController.dir/main.cpp.o: ../CPersistence.h
 CMakeFiles/VersionController.dir/main.cpp.o: ../graph.cpp
 CMakeFiles/VersionController.dir/main.cpp.o: ../graph.h
 CMakeFiles/VersionController.dir/main.cpp.o: ../hashTable.h
